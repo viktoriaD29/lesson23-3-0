@@ -1,3 +1,12 @@
+//algo:
+//1. створюємо функцію createTask (input: - / output: new arr), яка зчитує значення input
+  //якщо воно пусте, то не створює таску, якщо не пусте, то пушить нову таску в масив і робить новий список
+//2. вішаємо еventListener з функцією createTask на кнопку create
+//3.отримуємо input з чекбоксом і вішаємо на нього еventListener з функцією statusTask
+//4. функція statusTask (input: event / output: new arr):
+  //-перебирає масив
+  //-перевіряє чи співпадає id елемента з елементом на який клікнули
+  //-міняє статус done на протилежний
 const listElem = document.querySelector('.list');
 
 const tasks = [
@@ -43,15 +52,15 @@ const renderTasks = (tasksList) => {
   listElem.append(...tasksElems);
 };
 
-const listItem = document.querySelector('.list__item')
+const listItem = document.querySelector('input[type="checkbox"]');
 
 const statusTask = (event) => {
-  const arr = tasks.map(el => {
+  const arr = tasks.map((el) => {
     if (el.id === event.target.dataset.id) {
       el.done = !el.done;
     }
-  })
-  renderTasks(arr)
+  });
+  renderTasks(arr);
 };
 
 listItem.addEventListener('click', statusTask);
