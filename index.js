@@ -12,13 +12,12 @@ const inputElem = document.querySelector('.task-input');
 const buttonElem = document.querySelector('.create-task-btn');
 
 const createTask = () => {
-  if (inputElem.value === '') {
+  const textInput = inputElem.value;
+  if (textInput === '') {
     return;
   }
-
-  tasks.push({ text: inputElem.value, done: false, id: Math.random() });
+  tasks.push({ text: textInput, done: false, id: Math.random() });
   renderTasks(tasks);
-  inputElem.innerHTML = '';
 };
 
 buttonElem.addEventListener('click', createTask);
@@ -44,26 +43,15 @@ const renderTasks = (tasksList) => {
   listElem.append(...tasksElems);
 };
 
-const completeTask = (event) => {
-  const isCheckbox = event.target.classList.contains('.list__item-checkbox');
+const listItem = document.querySelector('.list__item')
 
-  if (!isCheckbox) {
-    return;
-  }
-
-  const res = tasks.map((el) => {
+const statusTask = (event) => {
+  const arr = tasks.map(el => {
     if (el.id === event.target.dataset.id) {
-      if (event.target.dataset.done === true) {
-        document.getElementById(event.target.dataset.id).disabled = false;
-      }
-      document.getElementById(event.target.dataset.id).checked = true;
+      el.done = !el.done;
     }
-
-    renderTasks(tasks);
-  });
-
-  return res;
+  })
+  renderTasks(arr)
 };
 
-listElem.addEventListener('click', completeTask);
-listElem.removeEventListener('click', completeTask)
+listItem.addEventListener('click', statusTask);
