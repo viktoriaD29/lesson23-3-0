@@ -66,3 +66,4 @@ const completeTask = (event) => {
 };
 
 listElem.addEventListener('click', completeTask);
+listElem.removeEventListener('click', completeTask)
