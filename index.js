@@ -12,11 +12,13 @@ const inputElem = document.querySelector('.task-input');
 const buttonElem = document.querySelector('.create-task-btn');
 
 const createTask = () => {
-  if (inputElem.value == '') {
+  if (inputElem.value === '') {
     return;
   }
 
   tasks.push({ text: inputElem.value, done: false, id: Math.random() });
+  renderTasks(tasks);
+  inputElem.innerHTML = '';
 };
 
 buttonElem.addEventListener('click', createTask);
@@ -38,14 +40,27 @@ const renderTasks = (tasksList) => {
 
       return listItemElem;
     });
-  listElem.innerHTML = '';
   listElem.append(...tasksElems);
 };
 
-renderTasks(tasks);
+const completeTask = (event) => {
+  const isCheckbox = event.target.classList.contains('.list__item-checkbox');
 
-const complete = (event) => {
-  
+  if (!isCheckbox) {
+    return;
+  }
+
+  tasks.map((el) => {
+    console.log(el.id);
+    if (el.id === event.target.dataset.id) {
+      if (el.done === true) {
+        document.getElementById(el.id).disabled = false;
+      }
+      document.getElementById(el.id).checked = true;
+    }
+  });
+
+  renderTasks(tasks);
 };
 
-renderTasks(tasks);
+listElem.addEventListener('click', completeTask);
