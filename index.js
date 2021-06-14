@@ -26,7 +26,7 @@ const createTask = () => {
     return;
   }
   tasks.push({ text: textInput, done: false, id: Math.random() });
-  renderTasks(tasks);
+  renderTasks(tasks)
 };
 
 buttonElem.addEventListener('click', createTask);
@@ -34,7 +34,7 @@ buttonElem.addEventListener('click', createTask);
 const renderTasks = (tasksList) => {
   const tasksElems = tasksList
     .sort((a, b) => a.done - b.done)
-    .map(({ text, done }) => {
+    .map(( { text, done } ) => {
       const listItemElem = document.createElement('li');
       listItemElem.classList.add('list__item');
       const checkbox = document.createElement('input');
@@ -52,13 +52,22 @@ const renderTasks = (tasksList) => {
   listElem.append(...tasksElems);
 };
 
+
+
 const statusTask = (event) => {
+  const isCheckbox = event.target.classList.contains('.list__item-checkbox')
+
+  if(!isCheckbox) {
+    return
+  }
+  
   const arr = tasks.map((el) => {
     if (el.id === event.target.dataset.id) {
       el.done = !el.done;
     }
   });
-  renderTasks(arr);
+  renderTasks(arr)
 };
+
 
 listElem.addEventListener('click', statusTask);
