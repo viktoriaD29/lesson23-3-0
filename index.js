@@ -40,6 +40,7 @@ const renderTasks = (tasksList) => {
 
       return listItemElem;
     });
+  listElem.innerHTML = '';
   listElem.append(...tasksElems);
 };
 
@@ -50,17 +51,18 @@ const completeTask = (event) => {
     return;
   }
 
-  tasks.map((el) => {
-    console.log(el.id);
+  const res = tasks.map((el) => {
     if (el.id === event.target.dataset.id) {
-      if (el.done === true) {
-        document.getElementById(el.id).disabled = false;
+      if (event.target.dataset.done === true) {
+        document.getElementById(event.target.dataset.id).disabled = false;
       }
-      document.getElementById(el.id).checked = true;
+      document.getElementById(event.target.dataset.id).checked = true;
     }
+
+    renderTasks(tasks);
   });
 
-  renderTasks(tasks);
+  return res;
 };
 
 listElem.addEventListener('click', completeTask);
